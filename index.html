@@ -1,0 +1,1443 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>[Vista previa] Estudio hipotecario sin coste · Cristina Zarza</title>
+<meta name="description" content="Cuéntame tu caso en 2 minutos y te digo con claridad si es viable, con qué entidades y en qué condiciones. Sin coste y sin compromiso.">
+<meta name="robots" content="noindex,nofollow">
+<link rel="icon" href="assets/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<meta property="og:type" content="website">
+<meta property="og:locale" content="es_ES">
+<meta property="og:site_name" content="Cristina Zarza · Asesora hipotecaria">
+<meta property="og:title" content="¿Tu hipoteca es viable? Te respondo en 24 h laborables">
+<meta property="og:description" content="Contesta unas preguntas y estudio tu caso sin coste. Intermediaria de crédito inmobiliario registrada en el Banco de España.">
+<!-- URL absolutas (WhatsApp e Instagram no resuelven rutas relativas).
+     Si se pasa a dominio propio, cambiar ambas. -->
+<meta property="og:image" content="https://nortes88-ux.github.io/cristina-zarza-vista-previa/assets/og.png">
+<meta property="og:url" content="https://nortes88-ux.github.io/cristina-zarza-vista-previa/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#f7f2e9">
+
+<style>
+/* ============ TOKENS ============
+   Línea visual: beige claro predominante, detalles en granate y negro.
+   Sin dorados ni rosas (el logo original se usa tal cual). */
+:root{
+  --crema:#f7f2e9; --crema-2:#ece3d3; --papel:#fffdf9;
+  --campo:#fbf8f2;          /* fondo de campos y opciones */
+  --seleccion:#efe6d6;      /* opción marcada */
+  --borgona:#8d2d44; --borgona-prof:#6d2035;
+  --negro:#1c1a19;
+  --linea:#e2d6c1; --borde-marca:#a89a86;
+  --texto:#1c1a19; --texto-suave:#5e5852;
+  --error:#a3231f;
+  --display:'Fraunces',Georgia,serif;
+  --cuerpo:'Inter',system-ui,'Segoe UI',sans-serif;
+  --radio:14px;
+  --sombra:0 1px 2px rgba(28,26,25,.04),0 8px 28px rgba(28,26,25,.06);
+  --sombra-alta:0 2px 4px rgba(28,26,25,.05),0 24px 60px rgba(28,26,25,.10);
+  --ease:cubic-bezier(.32,.72,0,1);
+  --ease-entrada:cubic-bezier(.16,1,.3,1);
+  --ease-estandar:cubic-bezier(.4,0,.2,1);
+}
+*{box-sizing:border-box}
+/* Al recorrer con el teclado, el campo con foco no queda tapado por la barra
+   de progreso (arriba) ni por la de navegación (abajo) */
+html{scroll-padding-top:72px; scroll-padding-bottom:calc(110px + env(safe-area-inset-bottom))}
+body{
+  margin:0; background:var(--crema); color:var(--texto);
+  font-family:var(--cuerpo); font-size:16px; line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+}
+img{max-width:100%; display:block}
+a{color:var(--borgona)}
+
+/* ============ ESTRUCTURA ============ */
+.hoja{
+  max-width:600px; margin:0 auto;
+  padding:24px 20px calc(120px + env(safe-area-inset-bottom));
+}
+
+/* Logo original, una sola vez y sin modificar */
+.logo{display:flex; justify-content:center; padding:0 0 16px}
+.logo img{width:56px; height:56px}
+
+/* Lienzo de portada: la imagen va a sangre, fuera del padding de la hoja */
+.lienzo{
+  position:relative; margin:0 -20px 0; overflow:hidden;
+  aspect-ratio:16/10; max-height:46vh;
+}
+.lienzo img{
+  width:100%; height:100%; object-fit:cover; object-position:50% 62%;
+  animation:acerca 1.6s var(--ease-entrada) both;
+}
+@keyframes acerca{from{transform:scale(1.06)} to{transform:none}}
+/* Doble velo: oscurece abajo para el texto y funde con el crema de la página */
+.lienzo::after{
+  content:""; position:absolute; inset:0; pointer-events:none;
+  background:
+    linear-gradient(to top, var(--crema) 0, rgba(247,242,233,0) 22%),
+    linear-gradient(to top, rgba(20,18,17,.62) 0, rgba(20,18,17,.12) 38%, rgba(20,18,17,0) 62%);
+}
+.lienzo figcaption{
+  position:absolute; left:20px; right:20px; bottom:52px; z-index:2;
+  font-family:var(--display); font-size:clamp(1.02rem,4.4vw,1.28rem);
+  font-weight:560; line-height:1.32; letter-spacing:-.015em; color:#fff;
+  text-shadow:0 1px 18px rgba(20,18,17,.5);
+  animation:entra .8s .18s var(--ease-entrada) both;
+}
+.lienzo figcaption span{color:var(--crema-2); font-weight:400; font-style:italic}
+
+/* Cabecera: el retrato monta sobre la imagen */
+.cabecera{
+  position:relative; z-index:3; display:flex; align-items:center; gap:14px;
+  margin:-34px 0 26px;
+}
+.retrato{
+  flex:none; width:86px; height:86px; border-radius:50%; padding:3px;
+  background:var(--borgona);
+  box-shadow:0 10px 30px rgba(28,26,25,.22);
+  display:block;
+  animation:asoma .7s .3s var(--ease-entrada) both;
+}
+@keyframes asoma{from{opacity:0; transform:translateY(12px) scale(.9)} to{opacity:1; transform:none}}
+/* El original es un plano entero (352×496): recortamos a primer plano.
+   Las medidas van en % del círculo, así el encuadre aguanta a cualquier tamaño. */
+.marco{
+  position:relative; display:block; width:100%; height:100%;
+  border-radius:50%; overflow:hidden;
+  border:2px solid var(--papel); background:var(--crema-2);
+}
+.marco img{
+  position:absolute; max-width:none;
+  width:220%; height:auto;
+  left:-42.5%; top:-13.75%;
+}
+.cabecera .nombre{font-family:var(--display); font-size:1.24rem; font-weight:600; letter-spacing:-.015em; line-height:1.2}
+.cabecera .rol{font-size:.79rem; color:var(--texto-suave); letter-spacing:.02em}
+
+/* En pantallas anchas la hoja se lee como tarjeta: la imagen se redondea */
+@media (min-width:640px){
+  .lienzo{margin:0 0 0; border-radius:18px; aspect-ratio:16/9}
+  .lienzo figcaption{left:26px; right:26px}
+}
+
+/* Portada */
+.portada{margin-bottom:30px}
+.eyebrow{
+  font-size:.7rem; font-weight:600; letter-spacing:.19em;
+  text-transform:uppercase; color:var(--borgona); margin-bottom:12px;
+}
+h1{
+  font-family:var(--display); font-weight:560; line-height:1.12;
+  letter-spacing:-.02em; margin:0 0 14px;
+  font-size:clamp(1.85rem,7vw,2.5rem);
+  font-variation-settings:'SOFT' 30,'WONK' 1;
+}
+.portada p{color:var(--texto-suave); margin:0 0 18px; font-size:1.02rem}
+.sellos{display:flex; flex-wrap:wrap; gap:8px}
+.sello{
+  display:inline-flex; align-items:center; gap:7px;
+  font-size:.76rem; font-weight:500; color:var(--texto);
+  background:var(--campo); border:1px solid var(--linea);
+  padding:7px 13px; border-radius:100px;
+}
+.sello svg{width:13px; height:13px; flex:none; color:var(--borgona)}
+
+/* Progreso */
+.progreso{
+  position:sticky; top:0; z-index:20;
+  margin:0 -20px 24px; padding:12px 20px 14px;
+  background:color-mix(in srgb, var(--crema) 88%, transparent);
+  backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--linea);
+}
+.progreso-fila{display:flex; justify-content:space-between; align-items:baseline; margin-bottom:9px}
+.progreso-paso{font-size:.74rem; font-weight:600; letter-spacing:.13em; text-transform:uppercase; color:var(--borgona)}
+.progreso-pct{font-size:.74rem; color:var(--texto-suave); font-variant-numeric:tabular-nums}
+.barra{height:4px; background:var(--crema-2); border-radius:100px; overflow:hidden}
+.barra span{
+  display:block; height:100%; width:0%;
+  background:var(--borgona);
+  border-radius:100px; transition:width .5s var(--ease);
+}
+
+/* Pasos */
+.paso{display:none}
+.paso.activo{display:block; animation:entra .42s var(--ease-entrada) both}
+@keyframes entra{from{opacity:0; transform:translateY(14px)} to{opacity:1; transform:none}}
+.paso-titulo{
+  font-family:var(--display); font-size:1.34rem; font-weight:600;
+  letter-spacing:-.015em; margin:0 0 4px;
+}
+.paso-sub{color:var(--texto-suave); font-size:.92rem; margin:0 0 26px}
+
+/* Preguntas */
+.q{
+  background:var(--papel); border:1px solid var(--linea); border-radius:var(--radio);
+  padding:20px 18px; margin-bottom:14px; box-shadow:var(--sombra);
+  transition:border-color .2s var(--ease-estandar), box-shadow .24s var(--ease);
+}
+.q:focus-within{border-color:var(--borde-marca); box-shadow:var(--sombra-alta)}
+.q.fallo{border-color:var(--error)}
+.q > label.titulo, .q .titulo{
+  display:block; font-weight:600; font-size:.98rem;
+  letter-spacing:-.005em; line-height:1.45; margin-bottom:4px;
+}
+.q .titulo .obl{color:var(--borgona); font-weight:400}
+.ayuda{font-size:.82rem; color:var(--texto-suave); margin:0 0 14px; line-height:1.55}
+.q .ayuda:last-of-type{margin-bottom:0}
+
+input[type=text],input[type=tel],input[type=email],input[type=number],textarea{
+  width:100%; font-family:var(--cuerpo); font-size:16px; color:var(--texto);
+  background:var(--campo); border:1px solid var(--linea);
+  border-radius:10px; padding:12px 14px; margin-top:10px;
+  transition:border-color .18s var(--ease-estandar), background-color .18s var(--ease-estandar);
+}
+input::placeholder,textarea::placeholder{color:#b7a79b}
+input:focus,textarea:focus{outline:none; border-color:var(--borgona); background:var(--papel)}
+input:disabled{opacity:.5; cursor:not-allowed}
+textarea{resize:vertical; min-height:96px; line-height:1.6}
+
+/* Opciones */
+.opciones{display:grid; gap:9px; margin-top:12px}
+.op{
+  position:relative; display:flex; align-items:flex-start; gap:12px;
+  padding:13px 15px; border:1px solid var(--linea); border-radius:11px;
+  background:var(--campo); cursor:pointer; font-size:.93rem; line-height:1.45;
+  transition:border-color .18s var(--ease-estandar), background-color .18s var(--ease-estandar), transform .16s var(--ease-estandar);
+}
+.op:active{transform:scale(.988)}
+.op input{position:absolute; opacity:0; width:0; height:0}
+.marca{
+  flex:none; width:19px; height:19px; margin-top:1px;
+  border:1.5px solid var(--borde-marca); border-radius:50%;
+  display:grid; place-items:center;
+  transition:border-color .18s var(--ease-estandar), background-color .18s var(--ease-estandar);
+}
+.op[data-multi] .marca{border-radius:6px}
+.marca::after{
+  content:""; width:9px; height:9px; border-radius:50%;
+  background:var(--papel); transform:scale(0);
+  transition:transform .2s var(--ease-entrada);
+}
+.op[data-multi] .marca::after{border-radius:2px; width:8px; height:8px}
+.op:has(input:checked){border-color:var(--borgona); background:var(--seleccion)}
+.op:has(input:checked) .marca{background:var(--borgona); border-color:var(--borgona)}
+.op:has(input:checked) .marca::after{transform:scale(1)}
+.op:has(input:focus-visible){outline:2px solid var(--borgona); outline-offset:2px}
+/* Opción secundaria bajo un campo («Aún no tengo una cifra») */
+.op-mini{margin-top:10px; padding:9px 13px; font-size:.85rem; background:transparent}
+.op-mini .marca{width:17px; height:17px}
+
+/* Campo trampa antispam: invisible para personas, visible para robots */
+.trampa{position:absolute; left:-9999px; width:1px; height:1px; overflow:hidden}
+
+.msg-error{
+  display:none; align-items:center; gap:7px;
+  color:var(--error); font-size:.82rem; font-weight:500; margin-top:11px;
+}
+.q.fallo .msg-error{display:flex}
+
+/* Navegación */
+.nav{
+  position:fixed; left:0; right:0; bottom:0; z-index:30;
+  padding:14px 20px calc(14px + env(safe-area-inset-bottom));
+  background:color-mix(in srgb, var(--crema) 92%, transparent);
+  backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);
+  border-top:1px solid var(--linea);
+}
+.nav-inner{max-width:600px; margin:0 auto; display:flex; gap:10px}
+.btn{
+  display:inline-flex; align-items:center; justify-content:center; gap:9px;
+  font-family:var(--cuerpo); font-size:.95rem; font-weight:600; letter-spacing:.01em;
+  padding:15px 26px; border-radius:100px; border:1px solid transparent;
+  cursor:pointer; text-decoration:none; white-space:nowrap;
+  transition:transform .16s var(--ease-estandar), background-color .18s ease-out,
+             border-color .18s ease-out, color .18s ease-out, box-shadow .24s var(--ease);
+}
+.btn:active{transform:scale(.975)}
+.btn-primario{background:var(--borgona); color:var(--crema); box-shadow:0 6px 20px rgba(141,45,68,.24); flex:1}
+.btn-primario:hover{background:var(--borgona-prof); box-shadow:0 12px 30px rgba(141,45,68,.32)}
+.btn-fantasma{background:transparent; color:var(--borgona); border-color:var(--linea)}
+.btn-fantasma:hover{border-color:var(--borgona); background:var(--campo)}
+.btn-wa{background:var(--negro); color:var(--crema); box-shadow:0 6px 20px rgba(28,26,25,.22); flex:1}
+.btn-wa:hover{background:#000}
+.btn svg{width:17px; height:17px; flex:none}
+
+/* Final */
+.final{display:none; text-align:center; padding:16px 0 0}
+.final.activo{display:block; animation:entra .5s var(--ease-entrada) both}
+.tick{
+  width:62px; height:62px; margin:0 auto 20px; border-radius:50%;
+  background:var(--crema-2); display:grid; place-items:center; color:var(--borgona);
+}
+.tick svg{width:29px; height:29px}
+.tick.error{background:var(--crema-2); color:var(--error)}
+.final h2:focus{outline:none}
+.reintentar{width:100%; margin:0 0 18px}
+.enlace{
+  background:none; border:0; padding:0; font:inherit; color:var(--borgona);
+  text-decoration:underline; cursor:pointer;
+}
+.final h2{font-family:var(--display); font-size:1.6rem; font-weight:600; letter-spacing:-.018em; margin:0 0 10px}
+.final p{color:var(--texto-suave); margin:0 auto 22px; max-width:44ch}
+.resumen{
+  text-align:left; background:var(--papel); border:1px solid var(--linea);
+  border-radius:var(--radio); padding:18px; margin-bottom:20px;
+  font-size:.86rem; line-height:1.7; white-space:pre-wrap; word-break:break-word;
+  max-height:230px; overflow:auto; color:var(--texto-suave);
+}
+.alt{font-size:.84rem; color:var(--texto-suave); margin-top:18px}
+.detalle{text-align:left; margin-top:6px}
+.detalle summary{
+  cursor:pointer; font-size:.85rem; font-weight:600; color:var(--borgona);
+  list-style:none; text-align:center; padding:8px;
+}
+.detalle summary::-webkit-details-marker{display:none}
+.detalle summary::after{content:" ▾"; font-size:.75em}
+.detalle[open] summary::after{content:" ▴"}
+.aviso{
+  display:none; text-align:left; gap:10px; font-size:.87rem; line-height:1.6;
+  border-radius:11px; padding:14px 16px; margin-bottom:18px;
+}
+.aviso.visible{display:block}
+.aviso.error{background:var(--campo); border:1px solid var(--linea); border-left:3px solid var(--error); color:#7a1a17}
+.aviso.espera{background:var(--campo); border:1px solid var(--linea); border-left:3px solid var(--borgona); color:var(--texto)}
+/* Estado "enviando" del botón */
+.btn[disabled]{opacity:.6; pointer-events:none}
+.girando{animation:gira 1s linear infinite; transform-origin:50% 50%}
+@keyframes gira{to{transform:rotate(360deg)}}
+
+/* Pie */
+.pie{
+  margin-top:36px; padding-top:22px; border-top:1px solid var(--linea);
+  font-size:.78rem; color:var(--texto-suave); line-height:1.65; text-align:center;
+}
+.pie a{color:var(--borgona); text-decoration:none}
+.pie a:hover{text-decoration:underline}
+
+.oculto{display:none !important}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms !important; transition-duration:.01ms !important}
+}
+</style>
+<style>
+.vp-aviso{background:#1c1a19; color:#f7f2e9; text-align:center; font:600 .78rem/1.45 Inter,system-ui,sans-serif; letter-spacing:.04em; padding:9px 16px}
+.vp-final{background:#1c1a19; color:#f7f2e9; border-radius:10px; padding:10px 14px; font-size:.85rem; margin:0 0 18px}
+</style></head>
+<body>
+<div class="vp-aviso" role="note"><strong>VISTA PREVIA DE PRUEBA</strong> · No se envía ningún dato. Usa solo datos ficticios.</div>
+
+<div class="hoja">
+
+  <header class="logo">
+    <img src="assets/logo.png" alt="Cristina Zarza" width="56" height="56">
+  </header>
+
+  <section class="portada" id="portada">
+
+    <figure class="lienzo">
+      <img src="assets/vivienda-atardecer.jpg" alt="Vivienda moderna con piscina al atardecer"
+           width="1920" height="1104" fetchpriority="high" decoding="async">
+      <figcaption>Tu casa empieza con una decisión.<br><span>Yo me encargo de que la tomes con seguridad.</span></figcaption>
+    </figure>
+
+    <header class="cabecera">
+      <span class="retrato">
+        <span class="marco">
+          <img src="assets/cristina.png" alt="Cristina Zarza Burgos, asesora hipotecaria" width="352" height="496">
+        </span>
+      </span>
+      <div>
+        <div class="nombre">Cristina Zarza</div>
+        <div class="rol">Asesora hipotecaria · Gestión inmobiliaria</div>
+      </div>
+    </header>
+
+    <div class="eyebrow">Estudio sin coste</div>
+    <h1>¿Tu hipoteca es viable? Te lo digo con claridad.</h1>
+    <p>Contéstame unas preguntas —dos minutos— y estudio tu caso: cuánto puedes financiar, con qué entidades encaja y qué necesitas tener preparado. Si no es viable, también te lo digo desde el principio.</p>
+    <div class="sellos">
+      <span class="sello">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        Banco de España · código E605
+      </span>
+      <span class="sello">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+        Respuesta en 24 h laborables
+      </span>
+      <span class="sello">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+        Sin compromiso
+      </span>
+    </div>
+  </section>
+
+  <div class="progreso" id="progreso">
+    <div class="progreso-fila">
+      <span class="progreso-paso" id="etiquetaPaso">Paso 1 de 3 · La operación</span>
+      <span class="progreso-pct" id="pct">0 %</span>
+    </div>
+    <div class="barra"><span id="barra"></span></div>
+  </div>
+
+  <div class="aviso espera" id="avisoBorrado" role="status"></div>
+
+  <form id="form" novalidate>
+
+    <!-- ══════════ PASO 1 ══════════ -->
+    <section class="paso activo" data-paso="1">
+      <h2 class="paso-titulo">Empecemos por la vivienda</h2>
+      <p class="paso-sub">Con esto ya puedo hacerme una idea del encaje de la operación.</p>
+
+      <div class="q" data-req>
+        <span class="titulo">¿Qué porcentaje de financiación necesitas? <span class="obl">*</span></span>
+        <p class="ayuda">Es la parte del precio que pedirías al banco. Sobre esto valoro la viabilidad.</p>
+        <div class="opciones">
+          <label class="op"><input type="radio" name="ltv" value="El 100% del precio de la vivienda"><span class="marca"></span><span>El 100% del precio de la vivienda</span></label>
+          <label class="op"><input type="radio" name="ltv" value="Alrededor del 90%"><span class="marca"></span><span>Alrededor del 90%</span></label>
+          <label class="op"><input type="radio" name="ltv" value="El 80% o menos"><span class="marca"></span><span>El 80% o menos</span></label>
+          <label class="op"><input type="radio" name="ltv" value="Todavía no lo sé"><span class="marca"></span><span>Todavía no lo sé</span></label>
+        </div>
+        <div class="msg-error">Elige una opción para continuar.</div>
+      </div>
+
+      <div class="q" data-req>
+        <span class="titulo">¿Tienes ya una vivienda concreta en mente? <span class="obl">*</span></span>
+        <div class="opciones">
+          <label class="op"><input type="radio" name="vivienda" value="Sí, ya tengo la vivienda elegida"><span class="marca"></span><span>Sí, ya la tengo elegida</span></label>
+          <label class="op"><input type="radio" name="vivienda" value="Estoy entre varias, decidiendo también por la financiación"><span class="marca"></span><span>Estoy entre varias, decidiendo también por la financiación</span></label>
+          <label class="op"><input type="radio" name="vivienda" value="Todavía no, primero quiere saber hasta dónde puede llegar"><span class="marca"></span><span>Todavía no: primero quiero saber hasta dónde puedo llegar</span></label>
+        </div>
+        <div class="msg-error">Elige una opción para continuar.</div>
+      </div>
+
+      <div class="q" data-req>
+        <label class="titulo" for="precio">¿Qué precio tiene la vivienda? <span class="obl">*</span></label>
+        <p class="ayuda">Si aún no la has elegido, dime el precio aproximado que estás mirando.</p>
+        <input type="text" id="precio" name="precio" inputmode="numeric" placeholder="Por ejemplo: 180.000 €" autocomplete="off" maxlength="40">
+        <label class="op op-mini" data-multi><input type="checkbox" id="precioNs" name="precio_ns" value="1"><span class="marca"></span><span>Aún no tengo una cifra</span></label>
+        <div class="msg-error">Escribe una cifra aproximada o marca «Aún no tengo una cifra».</div>
+      </div>
+
+      <div class="q" data-req>
+        <label class="titulo" for="ciudad">¿En qué ciudad o provincia compráis? <span class="obl">*</span></label>
+        <input type="text" id="ciudad" name="ciudad" placeholder="Por ejemplo: Elche, Alicante" autocomplete="address-level2" maxlength="80">
+        <div class="msg-error">Dime la zona de la compra.</div>
+      </div>
+    </section>
+
+    <!-- ══════════ PASO 2 ══════════ -->
+    <section class="paso" data-paso="2">
+      <h2 class="paso-titulo">Ahora, vuestro perfil</h2>
+      <p class="paso-sub">Cuanto más concreto seas, más ajustado será el estudio. Las cifras pueden ser aproximadas.</p>
+
+      <div class="q" data-req>
+        <span class="titulo">¿Cuántas personas firmaríais la hipoteca? <span class="obl">*</span></span>
+        <div class="opciones">
+          <label class="op"><input type="radio" name="titulares" value="1 titular"><span class="marca"></span><span>Solo yo</span></label>
+          <label class="op"><input type="radio" name="titulares" value="2 titulares"><span class="marca"></span><span>Dos personas</span></label>
+          <label class="op"><input type="radio" name="titulares" value="3 o más titulares"><span class="marca"></span><span>Tres o más</span></label>
+        </div>
+        <div class="msg-error">Elige una opción para continuar.</div>
+      </div>
+
+      <div class="q" data-req>
+        <span class="titulo">¿Cuál es vuestra situación laboral? <span class="obl">*</span></span>
+        <p class="ayuda">Marca todas las que apliquen entre los titulares.</p>
+        <div class="opciones">
+          <label class="op" data-multi><input type="checkbox" name="laboral" value="Contrato indefinido"><span class="marca"></span><span>Contrato indefinido</span></label>
+          <label class="op" data-multi><input type="checkbox" name="laboral" value="Fijo discontinuo"><span class="marca"></span><span>Fijo discontinuo</span></label>
+          <label class="op" data-multi><input type="checkbox" name="laboral" value="Contrato temporal"><span class="marca"></span><span>Contrato temporal</span></label>
+          <label class="op" data-multi><input type="checkbox" name="laboral" value="Autónomo o empresario"><span class="marca"></span><span>Autónomo o empresario</span></label>
+          <label class="op" data-multi><input type="checkbox" name="laboral" value="Funcionario o interino"><span class="marca"></span><span>Funcionario o interino</span></label>
+          <label class="op" data-multi><input type="checkbox" name="laboral" value="Pensionista"><span class="marca"></span><span>Pensionista</span></label>
+          <label class="op" data-multi><input type="checkbox" name="laboral" value="Otra situación"><span class="marca"></span><span>Otra situación</span></label>
+        </div>
+        <div class="msg-error">Marca al menos una opción.</div>
+      </div>
+
+      <div class="q" data-req>
+        <label class="titulo" for="antiguedad">¿Cuánta antigüedad tenéis en el trabajo actual? <span class="obl">*</span></label>
+        <p class="ayuda">Si eres autónomo, cuántos años llevas de alta.</p>
+        <input type="text" id="antiguedad" name="antiguedad" placeholder="Por ejemplo: 5 años yo y 3 años mi pareja" autocomplete="off" maxlength="120">
+        <div class="msg-error">Este dato pesa mucho en riesgos.</div>
+      </div>
+
+      <div class="q" data-req>
+        <label class="titulo" for="edad">¿Qué edad tenéis los titulares? <span class="obl">*</span></label>
+        <p class="ayuda">Condiciona el plazo máximo al que podéis optar.</p>
+        <input type="text" id="edad" name="edad" placeholder="Por ejemplo: 34 y 36 años" autocomplete="off" maxlength="60">
+        <div class="msg-error">Dime vuestras edades.</div>
+      </div>
+
+      <div class="q" data-req>
+        <label class="titulo" for="ingresos">¿Cuáles son vuestros ingresos netos mensuales? <span class="obl">*</span></label>
+        <p class="ayuda">Indica también si hay pagas extra, variables o ingresos por alquiler.</p>
+        <input type="text" id="ingresos" name="ingresos" placeholder="Por ejemplo: 1.700 € y 1.900 € en 14 pagas" autocomplete="off" maxlength="160">
+        <div class="msg-error">Sin ingresos no puedo calcular la capacidad de pago.</div>
+      </div>
+
+      <div class="q" data-req>
+        <label class="titulo" for="deudas">¿Pagáis ahora algún préstamo o cuota mensual? <span class="obl">*</span></label>
+        <p class="ayuda">Coche, personal, tarjetas aplazadas, financiación de muebles… Si no tenéis, escribe «ninguno».</p>
+        <input type="text" id="deudas" name="deudas" placeholder="Por ejemplo: 250 € al mes del coche hasta 2027" autocomplete="off" maxlength="160">
+        <div class="msg-error">Cuéntame si hay deudas abiertas.</div>
+      </div>
+
+      <div class="q" data-req>
+        <label class="titulo" for="ahorro">¿Cuánto tenéis ahorrado a día de hoy? <span class="obl">*</span></label>
+        <p class="ayuda">Cuenta con un 10-12 % del precio para impuestos, notaría y gestión, aparte de la entrada.</p>
+        <input type="text" id="ahorro" name="ahorro" placeholder="Por ejemplo: 25.000 €" autocomplete="off" maxlength="60">
+        <div class="msg-error">Es clave para saber si la operación se sostiene.</div>
+      </div>
+
+      <div class="q">
+        <label class="titulo" for="hijos">¿Tenéis hijos o personas a cargo?</label>
+        <input type="text" id="hijos" name="hijos" placeholder="Por ejemplo: dos hijos de 4 y 7 años" autocomplete="off" maxlength="120">
+      </div>
+    </section>
+
+    <!-- ══════════ PASO 3 ══════════ -->
+    <section class="paso" data-paso="3">
+      <h2 class="paso-titulo">Y por último, cómo te localizo</h2>
+      <p class="paso-sub">Reviso tu caso personalmente y te contesto en 24 h laborables.</p>
+
+      <div class="q" data-req>
+        <label class="titulo" for="nombre">Tu nombre y apellidos <span class="obl">*</span></label>
+        <input type="text" id="nombre" name="nombre" placeholder="María García Ruiz" autocomplete="name" maxlength="100">
+        <div class="msg-error">Dime cómo te llamas.</div>
+      </div>
+
+      <div class="q" data-req>
+        <label class="titulo" for="telefono">Tu teléfono <span class="obl">*</span></label>
+        <input type="tel" id="telefono" name="telefono" inputmode="tel" placeholder="600 000 000" autocomplete="tel" maxlength="20">
+        <div class="msg-error">Necesito un teléfono para llamarte.</div>
+      </div>
+
+      <div class="q" data-req>
+        <label class="titulo" for="email">Tu email <span class="obl">*</span></label>
+        <input type="email" id="email" name="email" placeholder="maria@gmail.com" autocomplete="email" maxlength="254">
+        <div class="msg-error">Revisa el email, parece incompleto.</div>
+      </div>
+
+      <div class="q" data-req>
+        <span class="titulo">¿Cómo me has conocido? <span class="obl">*</span></span>
+        <div class="opciones">
+          <label class="op"><input type="radio" name="canal" value="Instagram"><span class="marca"></span><span>Instagram</span></label>
+          <label class="op"><input type="radio" name="canal" value="Recomendación de un conocido"><span class="marca"></span><span>Me lo recomendó alguien</span></label>
+          <label class="op"><input type="radio" name="canal" value="Inmobiliaria o profesional del sector"><span class="marca"></span><span>Una inmobiliaria o profesional</span></label>
+          <label class="op"><input type="radio" name="canal" value="Búsqueda en Google"><span class="marca"></span><span>Buscando en Google</span></label>
+          <label class="op"><input type="radio" name="canal" value="Otro canal"><span class="marca"></span><span>De otra forma</span></label>
+        </div>
+        <div class="msg-error">Elige una opción para continuar.</div>
+      </div>
+
+      <div class="q">
+        <label class="titulo" for="notas">¿Algo más que deba saber?</label>
+        <p class="ayuda">Arras firmadas y con fecha, una denegación anterior, un impago antiguo, una herencia por medio… No incluyas datos de salud ni números de documentos: la documentación te la pediré después por un canal privado.</p>
+        <textarea id="notas" name="notas" placeholder="Cuéntame cualquier detalle que ayude a valorar tu caso" maxlength="1500"></textarea>
+      </div>
+
+      <div class="q" data-req>
+        <span class="titulo">Protección de datos <span class="obl">*</span></span>
+        <div class="opciones">
+          <label class="op" data-multi><input type="checkbox" name="rgpd" value="Sí"><span class="marca"></span><span id="textoRgpd">Acepto que Cristina Zarza Burgos trate mis datos para estudiar mi caso y contactarme. He leído la <a href="legal.html#privacidad" target="_blank" rel="noopener">política de privacidad</a>.</span></label>
+        </div>
+        <div class="msg-error">Necesito tu consentimiento para poder estudiar el caso.</div>
+      </div>
+
+      <!-- Trampa antispam (FormSubmit descarta el envío si llega relleno) -->
+      <div class="trampa" aria-hidden="true">
+        <label>No rellenes este campo <input type="text" name="_honey" tabindex="-1" autocomplete="off"></label>
+      </div>
+    </section>
+  </form>
+
+  <!-- ══════════ FINAL ══════════ -->
+  <section class="final" id="final">
+    <p class="vp-final">Vista previa: esta solicitud es una simulación y no se ha enviado a nadie.</p>
+    <div class="tick" id="tick">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+    </div>
+    <h2 id="tituloFinal" tabindex="-1">Solicitud enviada</h2>
+    <p id="textoFinal"></p>
+
+    <div class="aviso" id="aviso" role="status"></div>
+
+    <button type="button" class="btn btn-primario reintentar oculto" id="btnReintentar">Reintentar el envío</button>
+
+    <details class="detalle" id="detalle">
+      <summary>Ver tus respuestas</summary>
+      <div class="resumen" id="resumen"></div>
+    </details>
+
+    <p class="alt" id="alternativas">
+      <span id="altWa">¿Quieres avisarme también por WhatsApp? <a href="#" id="enlaceWa" target="_blank" rel="noopener">Escríbeme</a> · </span>
+      <span id="altEmail" class="oculto"><a href="#" id="enlaceEmail">Escribirme por email</a> · </span>
+      <button type="button" class="enlace" id="enlaceCopiar">copiar el resumen</button>
+      <span id="altBorrar" class="oculto"> · <button type="button" class="enlace" id="enlaceBorrar">borrar mis respuestas de este dispositivo</button></span>
+    </p>
+  </section>
+
+  <footer class="pie">
+    <strong>Cristina Zarza Burgos</strong> · Asesora hipotecaria y gestión inmobiliaria<br>
+    Intermediaria de crédito inmobiliario inscrita en el Banco de España con el código <strong>E605</strong>,<br>
+    conforme a la Ley 5/2019, de 15 de marzo, reguladora de los contratos de crédito inmobiliario.<br><br>
+    603 568 880 · gestioninmobiliaria.cristina@gmail.com<br>
+    <a href="legal.html">Aviso legal y privacidad</a> · <button type="button" class="enlace" id="borrarPie">Borrar mis respuestas de este dispositivo</button><br>
+    El estudio inicial es orientativo y sin coste. Toda operación queda sujeta a documentación y a la aprobación de la entidad financiera.
+  </footer>
+</div>
+
+<!-- ══════════ NAVEGACIÓN ══════════ -->
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <button type="button" class="btn btn-fantasma oculto" id="btnAtras">Atrás</button>
+    <button type="button" class="btn btn-primario" id="btnSiguiente">
+      Continuar
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </button>
+    <a class="btn btn-wa oculto" id="btnWhatsapp" href="#" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2m0 1.67c2.2 0 4.27.86 5.82 2.42a8.19 8.19 0 0 1 2.42 5.82c0 4.54-3.7 8.24-8.25 8.24-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.2 8.2 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.26-8.24m-3.6 4.1c-.17 0-.44.06-.67.31-.23.25-.88.86-.88 2.1s.9 2.43 1.03 2.6c.13.16 1.76 2.68 4.26 3.76.6.26 1.06.41 1.42.53.6.19 1.14.16 1.57.1.48-.07 1.48-.6 1.69-1.19.2-.58.2-1.08.15-1.19-.06-.1-.23-.16-.48-.29-.25-.12-1.48-.73-1.7-.81-.24-.09-.4-.13-.58.12-.17.25-.66.81-.8.98-.15.16-.3.19-.55.06-.25-.12-1.06-.39-2.01-1.24-.75-.66-1.25-1.48-1.4-1.73-.14-.25-.01-.38.11-.5.11-.12.25-.3.37-.44.13-.15.17-.25.25-.42.09-.16.04-.31-.02-.44-.06-.12-.55-1.35-.77-1.85-.2-.48-.4-.42-.55-.42z"/></svg>
+      Escribir por WhatsApp
+    </a>
+  </div>
+</nav>
+
+<script>
+/* VISTA PREVIA: envío simulado. Ninguna respuesta sale de este navegador.
+   ?simular=ok (por defecto) | rechazo | sin_confirmar | red | tiempo */
+(function(){
+  var modo = new URLSearchParams(location.search).get('simular') || 'ok';
+  var fetchOriginal = window.fetch;
+  window.fetch = function(url, opciones){
+    if(String(url).indexOf('simulado:') !== 0) return fetchOriginal.apply(this, arguments);
+    return new Promise(function(resuelve, rechaza){
+      var t = setTimeout(function(){
+        if(modo === 'red') return rechaza(new TypeError('Failed to fetch'));
+        var cuerpo = modo === 'rechazo' ? '{"success":"false","message":"Simulación de rechazo"}'
+                   : modo === 'sin_confirmar' ? '' : '{"success":"true","message":"Simulación"}';
+        resuelve(new Response(cuerpo, {status:200, headers:{'Content-Type':'application/json'}}));
+      }, modo === 'tiempo' ? 20000 : 900);
+      if(opciones && opciones.signal) opciones.signal.addEventListener('abort', function(){
+        clearTimeout(t); rechaza(new DOMException('Aborted', 'AbortError'));
+      });
+    });
+  };
+  // Para no escribir ni llamar a Cristina por error desde la vista previa
+  document.addEventListener('click', function(e){
+    var a = e.target.closest && e.target.closest('a[href^="#vista-previa-"]');
+    if(!a) return;
+    e.preventDefault();
+    alert('Vista previa: este enlace está desactivado para no escribir a Cristina por error.');
+  }, true);
+})();
+</script><script>
+(function(){
+  'use strict';
+
+  /* ── Configuración ─────────────────────────────────────── */
+  var TELEFONO_WA = '34603568880';                       // WhatsApp de Cristina
+  var EMAIL       = 'gestioninmobiliaria.cristina@gmail.com';
+
+  // Endpoint de envío: FormSubmit reenvía el formulario al correo de Cristina.
+  // Es gratuito y sin cuenta. El PRIMER envío no llega como solicitud:
+  // FormSubmit manda a ese buzón un correo de activación que hay que pulsar
+  // una sola vez. Después envía un alias aleatorio: sustituir EMAIL por él
+  // aquí para que la dirección no quede visible en el código de la página.
+  var ENDPOINT = 'simulado:' + EMAIL;   // VISTA PREVIA: envío simulado
+
+  // Espera máxima del envío. No hay reintento automático: si se agota el tiempo
+  // o se corta la conexión, la solicitud pudo llegar igualmente, así que solo
+  // se reintenta si la persona lo decide.
+  var LIMITE_MS = 15000;
+
+  // Autoguardado: solo en esta pestaña (sessionStorage, se borra al cerrarla)
+  // y con caducidad. Las notas libres no se guardan nunca.
+  var CLAVE         = 'cz-estudio-v2';
+  var CLAVE_ANTIGUA = 'cz-estudio-v1';             // versión anterior, en localStorage
+  var CADUCIDAD_MS  = 2 * 60 * 60 * 1000;          // 2 horas
+  var NO_GUARDAR    = ['notas'];
+
+  // Debe coincidir con la versión que figura en legal.html (#version).
+  var VERSION_PRIVACIDAD = '2026-10-23';
+
+  var PRECIO_DESCONOCIDO = 'Aún no tiene una cifra';
+
+  var TITULOS = ['La operación','Vuestro perfil','Tus datos'];
+  var ETIQUETAS = {
+    ltv:'Financiación que necesita', vivienda:'Vivienda elegida',
+    precio:'Precio de la vivienda', ciudad:'Zona',
+    titulares:'Titulares', laboral:'Situación laboral',
+    antiguedad:'Antigüedad', edad:'Edades', ingresos:'Ingresos netos',
+    deudas:'Deudas actuales', ahorro:'Ahorro disponible', hijos:'Hijos / personas a cargo',
+    nombre:'Nombre', telefono:'Teléfono', email:'Email',
+    canal:'Cómo me ha conocido', notas:'Otros datos'
+  };
+
+  // «rechazo»: el servicio contestó que NO acepta la solicitud (no ha llegado).
+  // El resto son inciertos: la solicitud pudo recibirse aunque no haya respuesta.
+  var MOTIVOS = {
+    tiempo:   'El servicio de envío no ha respondido a tiempo.',
+    red:      'Se ha perdido la conexión con el servicio de envío.',
+    servicio: 'El servicio de envío ha devuelto un error.',
+    sin_confirmar: 'El servicio de envío ha respondido, pero sin confirmar que haya recibido la solicitud.',
+    rechazo:  'El servicio de envío no ha aceptado la solicitud, así que no me ha llegado.'
+  };
+
+  var ICONO_OK    = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>';
+  var ICONO_AVISO = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 8v5M12 17h.01"/><circle cx="12" cy="12" r="9"/></svg>';
+  var ICONO_GIRO  = '<svg class="girando" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 3a9 9 0 1 0 9 9"/></svg>';
+
+  function $(id){ return document.getElementById(id); }
+
+  var form      = $('form');
+  var pasos     = Array.prototype.slice.call(document.querySelectorAll('.paso'));
+  var btnSig    = $('btnSiguiente');
+  var btnAtras  = $('btnAtras');
+  var btnWa     = $('btnWhatsapp');
+  var btnRetry  = $('btnReintentar');
+  var barra     = $('barra');
+  var pct       = $('pct');
+  var etiqueta  = $('etiquetaPaso');
+  var final_    = $('final');
+  var portada   = $('portada');
+  var progreso  = $('progreso');
+  var nsPrecio  = $('precioNs');
+  var rgpd      = form.querySelector('[name="rgpd"]');
+  var honey     = form.querySelector('[name="_honey"]');
+  var actual    = 0;
+
+  var enviando   = false;
+  var referencia = null;   // una por solicitud; el reintento manual la conserva
+  var aceptadoEn = null;   // momento en que se marcó la casilla de privacidad
+  var ultimo     = null;   // {datos, cuerpo, carga} del último envío preparado
+  var ultimaActividad = 0; // para la caducidad con la página abierta
+
+  /* ── Lectura de cifras ─────────────────────────────────── */
+  // Cantidades de un texto: «180.000», «1.700,50», «180k», «180 mil», «1,5 millones»…
+  var RE_IMPORTE = /(\d{1,3}(?:\.\d{3})+|\d+)(?:,(\d+))?\s*(k\b|mil\b|millones?\b|mill?\.?\b)?/gi;
+  function sinTildes(t){ return t.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, ''); }
+
+  // Cada cifra con su contexto: si es un año («hasta 2027») o un recuento
+  // («14 pagas», «72 meses») no cuenta como importe.
+  function cifras(t){
+    var res = [], m;
+    RE_IMPORTE.lastIndex = 0;
+    while((m = RE_IMPORTE.exec(t))){
+      var n = parseFloat(m[1].replace(/\./g,'') + (m[2] ? '.' + m[2] : ''));
+      var mult = (m[3] || '').toLowerCase();
+      if(mult === 'k' || mult === 'mil') n *= 1000;
+      else if(mult) n *= 1000000;
+      var despues = sinTildes(t.slice(m.index + m[0].length, m.index + m[0].length + 16));
+      var moneda  = !!mult || /^\s*(€|eur\b|euros?\b)/.test(despues);
+      res.push({
+        n: n,
+        anio:   !moneda && !m[2] && /^\d{4}$/.test(m[1]) && n >= 1900 && n <= 2100,
+        conteo: !moneda && /^\s*(pagas?|mes(es)?|anos?|semanas?|dias?|horas?|hijos?|cuotas?|plazos?|titulares?|personas?)\b/.test(despues)
+      });
+    }
+    return res;
+  }
+  function importes(t){ return cifras(t).map(function(c){ return c.n; }); }
+  function cantidades(t){
+    return cifras(t).filter(function(c){ return !c.anio && !c.conteo; }).map(function(c){ return c.n; });
+  }
+  function letras(t){ return (t.match(/[a-záéíóúüñ]/gi) || []).length; }
+
+  // Un signo menos delante de una cifra es negativo, salvo que separe un rango
+  // («1.700 - 1.900» o «1.700 € – 1.900 €»).
+  function negativo(t){
+    var re = /[-−–]\s*\d/g, m;
+    while((m = re.exec(t))){
+      var antes = t.slice(0, m.index).replace(/\s+$/, '');
+      if(!/[\d€]$/.test(antes)) return true;
+    }
+    return false;
+  }
+
+  // Campos de una sola cifra (precio, ahorro, edades): solo admiten palabras
+  // de aproximación o de contexto, para no aceptar «180.000 patatas».
+  // Ingresos, deudas y antigüedad admiten explicaciones libres.
+  function voc(){
+    var o = {};
+    Array.prototype.forEach.call(arguments, function(s){ s.split(' ').forEach(function(p){ o[p] = 1; }); });
+    return o;
+  }
+  function palabrasAjenas(t, vocab){
+    var limpio = sinTildes(t.replace(RE_IMPORTE, ' '));
+    return (limpio.match(/[a-z]+/g) || []).filter(function(p){ return !vocab[p]; });
+  }
+
+  var V_COMUN = 'unos unas uno una aprox aproximadamente aproximado aproximada aproximados alrededor sobre ' +
+    'cerca casi mas menos entre y e o u de del la el los las al a en con sin por para cada total mi mis su sus ' +
+    'yo nuestro nuestra nuestros ahora actualmente euros euro eur mil millon millones k neto netos neta netas';
+  var V_PERSONAS = 'pareja marido mujer esposo esposa novio novia titular titulares primero primera segundo ' +
+    'segunda tercero tercera otro otra ambos juntos persona dos tres';
+  var V_PRECIO = voc(V_COMUN, 'precio vivienda casa piso valor maximo minimo hasta desde');
+  var V_AHORRO = voc(V_COMUN, V_PERSONAS, 'ahorrado ahorrados ahorradas ahorro ahorros tenemos tengo banco ' +
+    'cuenta cuentas nada ninguno ninguna disponible disponibles');
+  var V_EDAD   = voc(V_COMUN, V_PERSONAS, 'anos ano tengo tiene tenemos tienen');
+
+  var NEGATIVO = 'No se admiten cantidades negativas.';
+  function noEntiendo(ajenas, ejemplo){
+    return 'No entiendo «' + ajenas[0] + '». Escribe la cifra, por ejemplo ' + ejemplo + '.';
+  }
+  var NINGUNO = /^(no|ninguno|ninguna|nada|sin deudas?|0|0 ?€)\.?$/i;
+
+  /* ── Antigüedad: tiempos y fechas ──────────────────────── */
+  var NUM_PALABRA = {un:1, uno:1, una:1, dos:2, tres:3, cuatro:4, cinco:5, seis:6, siete:7, ocho:8, nueve:9,
+    diez:10, once:11, doce:12, quince:15, veinte:20, medio:0.5, media:0.5};
+  var MESES = {enero:1, febrero:2, marzo:3, abril:4, mayo:5, junio:6, julio:7, agosto:8, septiembre:9,
+    setiembre:9, octubre:10, noviembre:11, diciembre:12};
+  // Máximo razonable de antigüedad: 50 años, expresado en cada unidad
+  var MAX_POR_UNIDAD = {ano:50, mes:600, semana:2600};
+
+  // Devuelve [{n, unidad}] para «5 años», «72 meses», «medio año», «cinco semanas»…
+  function tiempos(n){
+    var re = /(\d+(?:[.,]\d+)?|un|uno|una|dos|tres|cuatro|cinco|seis|siete|ocho|nueve|diez|once|doce|quince|veinte|medio|media)\s*(anos?|mes(?:es)?|semanas?)\b/g;
+    var res = [], m;
+    while((m = re.exec(n))){
+      var num = NUM_PALABRA.hasOwnProperty(m[1]) ? NUM_PALABRA[m[1]] : parseFloat(m[1].replace(',', '.'));
+      var unidad = m[2].indexOf('ano') === 0 ? 'ano' : m[2].indexOf('mes') === 0 ? 'mes' : 'semana';
+      res.push({n: num, unidad: unidad});
+    }
+    return res;
+  }
+
+  // Fechas de inicio: «desde 2019», «desde marzo de 2019», «desde el 15/03/2019».
+  // Devuelve {futura, antigua, hay}.
+  function fechas(n){
+    var hoy = new Date(), anioHoy = hoy.getFullYear(), mesHoy = hoy.getMonth() + 1;
+    var r = {hay:false, futura:false, antigua:false}, m;
+    var reDia = /\b(\d{1,2})[\/\-.](\d{1,2})[\/\-.]((?:19|20)\d{2})\b/g;
+    while((m = reDia.exec(n))){
+      r.hay = true;
+      var f = new Date(+m[3], +m[2] - 1, +m[1]);
+      if(f > hoy) r.futura = true;
+      if(+m[3] < anioHoy - 50) r.antigua = true;
+    }
+    var reMes = /\b(enero|febrero|marzo|abril|mayo|junio|julio|agosto|septiembre|setiembre|octubre|noviembre|diciembre)\s+(?:de\s+|del\s+)?((?:19|20)\d{2})\b/g;
+    while((m = reMes.exec(n))){
+      r.hay = true;
+      if(+m[2] > anioHoy || (+m[2] === anioHoy && MESES[m[1]] > mesHoy)) r.futura = true;
+      if(+m[2] < anioHoy - 50) r.antigua = true;
+    }
+    var reAnio = /\b((?:19|20)\d{2})\b/g;
+    while((m = reAnio.exec(n))){
+      r.hay = true;
+      if(+m[1] > anioHoy) r.futura = true;
+      if(+m[1] < anioHoy - 50) r.antigua = true;
+    }
+    return r;
+  }
+
+  function numTitulares(){
+    var m = form.querySelector('[name="titulares"]:checked');
+    if(!m) return 0;
+    return m.value.charAt(0) === '1' ? 1 : m.value.charAt(0) === '2' ? 2 : 3;
+  }
+
+  /* ── Reglas por campo: devuelven el mensaje de error o '' ─ */
+  var REGLAS = {
+    precio: function(v){
+      if(negativo(v)) return NEGATIVO;
+      var ns = importes(v);
+      if(!ns.length) return 'Escribe una cifra, aunque sea aproximada (por ejemplo 180.000 €), o marca «Aún no tengo una cifra».';
+      var ajenas = palabrasAjenas(v, V_PRECIO);
+      if(ajenas.length) return noEntiendo(ajenas, '«180.000 €» o «unos 180k»');
+      if(ns.some(function(n){ return n < 10000 || n > 5000000; })) return 'Revisa la cifra: debería estar entre 10.000 y 5.000.000 €.';
+      return '';
+    },
+    ciudad: function(v){
+      return letras(v) >= 2 ? '' : 'Dime la zona de la compra, por ejemplo «Elche».';
+    },
+    antiguedad: function(v){
+      if(negativo(v)) return NEGATIVO;
+      var n = sinTildes(v);
+      var f = fechas(n);
+      if(f.futura) return 'La fecha no puede ser futura. Indica desde cuándo trabajas, por ejemplo «desde 2019».';
+      if(f.antigua) return 'Revisa la fecha: parece demasiado antigua.';
+      var ts = tiempos(n);
+      for(var i = 0; i < ts.length; i++){
+        if(ts[i].n <= 0) return 'Revisa la cifra: la antigüedad debe ser mayor que cero.';
+        if(ts[i].n > MAX_POR_UNIDAD[ts[i].unidad]) return 'Revisa la cifra: ' + ts[i].n + ' ' +
+          {ano:'años', mes:'meses', semana:'semanas'}[ts[i].unidad] + ' parece demasiado.';
+      }
+      if(ts.length) return '';
+      if(f.hay && /\bdesde\b/.test(n)) return '';
+      if(/\b(recien|acabo de)\b/.test(n)) return '';
+      return 'Indícalo con un número y la unidad, por ejemplo «5 años», «8 meses» o «desde 2019».';
+    },
+    edad: function(v){
+      if(negativo(v)) return NEGATIVO;
+      var ajenas = palabrasAjenas(v, V_EDAD);
+      if(ajenas.length) return noEntiendo(ajenas, '«34 y 36»');
+      var edades = (v.match(/\d+/g) || []).map(Number);
+      if(!edades.length) return 'Escribe la edad de cada titular, por ejemplo «34 y 36».';
+      if(edades.some(function(e){ return e < 18 || e > 85; })) return 'Revisa las edades: deben estar entre 18 y 85 años.';
+      var t = numTitulares();
+      if(t === 1 && edades.length !== 1) return 'Has indicado ' + edades.length + ' edades, pero firmaría una sola persona. Escribe solo tu edad.';
+      if(t === 2 && edades.length !== 2) return 'Escribe una edad por titular: dos edades, por ejemplo «34 y 36».';
+      if(t === 3 && edades.length < 3) return 'Escribe una edad por titular: al menos tres.';
+      return '';
+    },
+    // Texto libre: se exige al menos un importe y límites razonables; las
+    // palabras que lo acompañen no se restringen.
+    ingresos: function(v){
+      if(negativo(v)) return NEGATIVO;
+      var ns = cantidades(v);
+      if(!ns.length) return 'Indica una cifra aproximada en euros, por ejemplo «1.800 €».';
+      if(ns.some(function(n){ return n > 100000; })) return 'Revisa la cifra: indica los ingresos netos de cada mes.';
+      if(!ns.some(function(n){ return n >= 200; })) return 'Revisa la cifra: indica los ingresos netos de cada mes, por ejemplo «1.800 €».';
+      return '';
+    },
+    deudas: function(v){
+      if(NINGUNO.test(v)) return '';
+      if(negativo(v)) return NEGATIVO;
+      var ns = cantidades(v);
+      if(!ns.length) return 'Indica la cuota mensual en euros (por ejemplo «250 €») o escribe «ninguno».';
+      if(ns.some(function(n){ return n <= 0; })) return 'Revisa la cifra: la cuota debe ser mayor que cero, o escribe «ninguno».';
+      if(ns.some(function(n){ return n > 1000000; })) return 'Revisa la cifra: parece demasiado alta.';
+      return '';
+    },
+    ahorro: function(v){
+      if(/^(nada|ninguno|ninguna)\.?$/i.test(v)) return '';
+      if(negativo(v)) return NEGATIVO;
+      var ns = importes(v);
+      if(!ns.length) return 'Escribe una cifra aproximada, por ejemplo «25.000 €», o «0».';
+      var ajenas = palabrasAjenas(v, V_AHORRO);
+      if(ajenas.length) return noEntiendo(ajenas, '«25.000 €»');
+      if(ns.some(function(n){ return n > 5000000; })) return 'Revisa la cifra: parece demasiado alta.';
+      return '';
+    },
+    nombre: function(v){
+      if(/\d/.test(v)) return 'Escribe tu nombre sin números.';
+      return letras(v) >= 2 ? '' : 'Escribe tu nombre completo.';
+    },
+    telefono: function(v){
+      var d = v.replace(/[\s.\-()\/]/g, '');
+      if(/^(\+34|0034)?[6789]\d{8}$/.test(d)) return '';
+      if(/^(\+|00)(?!34)[1-9]\d{7,14}$/.test(d)) return '';
+      return 'Revisa el teléfono: 9 cifras, por ejemplo 600 000 000 (o con prefijo internacional).';
+    },
+    email: function(v){
+      if(v.length > 254 || v.indexOf('..') !== -1 ||
+         !/^[^\s@]+@[^\s@.]+(\.[^\s@.]+)*\.[a-z]{2,}$/i.test(v)) return 'Revisa el email, parece incompleto.';
+      return '';
+    }
+  };
+
+  /* ── Validación ────────────────────────────────────────── */
+  function errorDe(q){
+    var req  = q.hasAttribute('data-req');
+    var msg  = q.querySelector('.msg-error');
+    var base = msg ? msg.getAttribute('data-base') : '';
+    var campo = q.querySelector('input[type=text],input[type=tel],input[type=email],textarea');
+    if(campo){
+      if(campo.id === 'precio' && nsPrecio.checked) return '';
+      var v = campo.value.trim();
+      if(!v) return req ? base : '';
+      return REGLAS[campo.id] ? REGLAS[campo.id](v) : '';
+    }
+    return (req && !q.querySelector('input:checked')) ? base : '';
+  }
+
+  function validaCampo(q){ return !errorDe(q); }
+
+  function marca(q, error){
+    var msg = q.querySelector('.msg-error');
+    q.classList.toggle('fallo', !!error);
+    if(msg && error) msg.textContent = error;
+    q.querySelectorAll('input,textarea').forEach(function(c){
+      if(error) c.setAttribute('aria-invalid','true'); else c.removeAttribute('aria-invalid');
+    });
+  }
+
+  function validaPaso(indice){
+    var primeroFallido = null;
+    pasos[indice].querySelectorAll('.q[data-req]').forEach(function(q){
+      var error = errorDe(q);
+      marca(q, error);
+      if(error && !primeroFallido) primeroFallido = q;
+    });
+    if(primeroFallido){
+      primeroFallido.scrollIntoView({behavior:'smooth', block:'center'});
+      var f = primeroFallido.querySelector('input:not([disabled]),textarea');
+      if(f) setTimeout(function(){ f.focus({preventScroll:true}); }, 380);
+    }
+    return !primeroFallido;
+  }
+
+  // Cada mensaje de error queda asociado a sus campos para los lectores de pantalla
+  form.querySelectorAll('.q').forEach(function(q, i){
+    var msg = q.querySelector('.msg-error');
+    if(!msg) return;
+    msg.id = 'error-' + (i + 1);
+    msg.setAttribute('data-base', msg.textContent);
+    msg.setAttribute('aria-live', 'polite');
+    q.querySelectorAll('input,textarea').forEach(function(c){ c.setAttribute('aria-describedby', msg.id); });
+  });
+
+  // Al corregir, el error se actualiza o desaparece solo
+  form.addEventListener('input', limpia, true);
+  form.addEventListener('change', function(e){ limpia(e); guarda(); }, true);
+  function limpia(e){
+    var q = e.target.closest('.q');
+    if(q && q.classList.contains('fallo')) marca(q, errorDe(q));
+    refrescaProgreso();
+  }
+
+  function aplicaPrecioDesconocido(){
+    var precio = $('precio');
+    precio.disabled = nsPrecio.checked;
+    if(nsPrecio.checked) precio.value = '';
+  }
+  nsPrecio.addEventListener('change', aplicaPrecioDesconocido);
+
+  rgpd.addEventListener('change', function(){ aceptadoEn = rgpd.checked ? new Date() : null; });
+
+  /* ── Progreso ──────────────────────────────────────────── */
+  function refrescaProgreso(){
+    var todas = form.querySelectorAll('.q[data-req]');
+    var hechas = 0;
+    todas.forEach(function(q){ if(validaCampo(q)) hechas++; });
+    var p = Math.round(hechas / todas.length * 100);
+    barra.style.width = p + '%';
+    pct.textContent = p + ' %';
+    etiqueta.textContent = 'Paso ' + (actual+1) + ' de 3 · ' + TITULOS[actual];
+  }
+
+  /* ── Navegación ────────────────────────────────────────── */
+  function vaA(indice){
+    pasos[actual].classList.remove('activo');
+    actual = indice;
+    pasos[actual].classList.add('activo');
+    btnAtras.classList.toggle('oculto', actual === 0);
+    btnSig.innerHTML = (actual === pasos.length - 1)
+      ? 'Enviar mi solicitud'
+      : 'Continuar <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+    refrescaProgreso();
+    window.scrollTo({top: progreso.offsetTop - 8, behavior:'smooth'});
+  }
+
+  btnSig.addEventListener('click', function(){
+    if(enviando) return;
+    if(!validaPaso(actual)) return;
+    if(actual < pasos.length - 1){ vaA(actual + 1); return; }
+    finaliza();
+  });
+  btnAtras.addEventListener('click', function(){ if(!enviando && actual > 0) vaA(actual - 1); });
+
+  // Enter avanza en lugar de enviar el formulario
+  form.addEventListener('keydown', function(e){
+    if(e.key === 'Enter' && e.target.tagName !== 'TEXTAREA'){ e.preventDefault(); btnSig.click(); }
+  });
+
+  /* ── Resumen ───────────────────────────────────────────── */
+  function recoge(){
+    var datos = {};
+    Object.keys(ETIQUETAS).forEach(function(nombre){
+      var campos = form.querySelectorAll('[name="'+nombre+'"]');
+      if(!campos.length) return;
+      if(campos[0].type === 'radio' || campos[0].type === 'checkbox'){
+        var marcados = [];
+        campos.forEach(function(c){ if(c.checked) marcados.push(c.value); });
+        if(marcados.length) datos[nombre] = marcados.join(', ');
+      } else if(campos[0].value.trim()){
+        datos[nombre] = campos[0].value.trim();
+      }
+    });
+    if(nsPrecio.checked) datos.precio = PRECIO_DESCONOCIDO;
+    return datos;
+  }
+
+  function dos(n){ return (n < 10 ? '0' : '') + n; }
+  function fecha(d){
+    var local;
+    try{ local = d.toLocaleString('es-ES', {timeZone:'Europe/Madrid'}); }
+    catch(err){ local = d.toLocaleString('es-ES'); }
+    return local + ' (hora de Madrid) · ' + d.toISOString();
+  }
+
+  function nuevaReferencia(){
+    var abc = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789', r = new Uint8Array(4), az = '', d = new Date();
+    if(window.crypto && crypto.getRandomValues) crypto.getRandomValues(r);
+    else for(var i = 0; i < 4; i++) r[i] = Math.floor(Math.random() * 256);
+    for(var j = 0; j < 4; j++) az += abc.charAt(r[j] % abc.length);
+    return 'CZ-' + String(d.getFullYear()).slice(2) + dos(d.getMonth()+1) + dos(d.getDate()) + '-' + az;
+  }
+
+  function texto(datos){
+    var lineas = ['Hola Cristina, quiero que estudies mi caso 🏡', ''];
+    Object.keys(ETIQUETAS).forEach(function(k){
+      if(datos[k]) lineas.push('• ' + ETIQUETAS[k] + ': ' + datos[k]);
+    });
+    lineas.push('• Privacidad: aceptada (versión ' + VERSION_PRIVACIDAD + ')');
+    lineas.push('• Referencia: ' + referencia);
+    lineas.push('', '(Enviado desde el formulario de estudio)');
+    return lineas.join('\n');
+  }
+
+  /* De dónde viene la visita: lee los utm_* del enlace (los que ponemos en la
+     bio de Instagram, en stories, etc.) para saber qué canal trae los leads. */
+  function origen(){
+    var p = new URLSearchParams(location.search);
+    var partes = [];
+    ['utm_source','utm_medium','utm_campaign','utm_content'].forEach(function(k){
+      if(p.get(k)) partes.push(k.replace('utm_','') + '=' + p.get(k));
+    });
+    return partes.length ? partes.join(' · ') : 'directo';
+  }
+
+  function construyeCarga(datos, cuerpo){
+    var carga = {
+      _subject: 'Nueva solicitud de estudio · ' + (datos.nombre || 'sin nombre') + ' · ' + referencia,
+      _template: 'table',
+      _captcha: 'false',
+      _honey: honey.value
+    };
+    Object.keys(ETIQUETAS).forEach(function(k){
+      if(k !== 'email' && datos[k]) carga[ETIQUETAS[k]] = datos[k];
+    });
+    // FormSubmit usa el campo «email» como Reply-To: responder al correo
+    // le llega directamente al interesado.
+    carga.email = datos.email;
+    carga['Referencia'] = referencia;
+    carga['Privacidad aceptada'] = 'Sí';
+    carga['Versión de la política de privacidad'] = VERSION_PRIVACIDAD;
+    carga['Fecha de aceptación'] = fecha(aceptadoEn);
+    carga['Texto aceptado'] = $('textoRgpd').textContent.replace(/\s+/g,' ').trim();
+    carga['Resumen'] = cuerpo;
+    carga['Origen del enlace'] = origen();
+    carga['Solicitud generada'] = fecha(new Date());
+    return carga;
+  }
+
+  /* ── Envío: un solo intento con tiempo límite ─────────────── */
+  function fallo(tipo, detalle){ var e = new Error(tipo); e.tipo = tipo; e.detalle = detalle || ''; return e; }
+
+  function envia(carga){
+    return new Promise(function(resuelve, rechaza){
+      var ctrl = (typeof AbortController === 'function') ? new AbortController() : null;
+      var hecho = false;
+      function fin(f, v){ if(hecho) return; hecho = true; clearTimeout(reloj); f(v); }
+      var reloj = setTimeout(function(){
+        if(ctrl) ctrl.abort();
+        fin(rechaza, fallo('tiempo'));
+      }, LIMITE_MS);
+
+      fetch(ENDPOINT, {
+        method:'POST',
+        headers:{'Content-Type':'application/json','Accept':'application/json'},
+        body: JSON.stringify(carga),
+        signal: ctrl ? ctrl.signal : undefined
+      }).then(function(r){
+        return r.text().then(function(cuerpo){
+          var j = null;
+          try{ j = cuerpo ? JSON.parse(cuerpo) : null; }catch(err){ j = null; }
+          var detalle = 'HTTP ' + r.status + (j && j.message ? ' · ' + j.message : (cuerpo ? '' : ' · respuesta vacía'));
+          if(!r.ok){
+            // Un 4xx (salvo 408) es una negativa explícita a procesar la petición.
+            // 408 y 5xx no garantizan que no se haya recibido.
+            if(r.status >= 400 && r.status < 500 && r.status !== 408) throw fallo('rechazo', detalle);
+            throw fallo('servicio', detalle);
+          }
+          var exito = (j && typeof j === 'object' && 'success' in j) ? String(j.success).toLowerCase() : null;
+          if(exito === 'true') return j;
+          // FormSubmit responde 200 con success "false" si el formulario aún no está activado
+          if(exito === 'false') throw fallo('rechazo', detalle);
+          // Vacía, JSON inválido o sin «success»: no se puede afirmar ni negar la recepción
+          throw fallo('sin_confirmar', detalle);
+        });
+      }).then(function(j){ fin(resuelve, j); },
+              function(e){ fin(rechaza, (e && e.tipo) ? e : fallo('red', e && e.message)); });
+    });
+  }
+
+  function primerPasoConError(){
+    for(var i = 0; i < pasos.length; i++){
+      var qs = pasos[i].querySelectorAll('.q[data-req]');
+      for(var k = 0; k < qs.length; k++){ if(errorDe(qs[k])) return i; }
+    }
+    return -1;
+  }
+
+  function finaliza(){
+    if(enviando) return;
+    // Comprobación final de los tres pasos: pueden haber cambiado al volver atrás
+    var i = primerPasoConError();
+    if(i !== -1){
+      if(i !== actual) vaA(i);
+      validaPaso(i);
+      return;
+    }
+    // La aceptación solo vale si la persona marcó la casilla en esta visita.
+    // Nunca se genera una por defecto.
+    if(!rgpd.checked || !aceptadoEn){
+      rgpd.checked = false;
+      aceptadoEn = null;
+      validaPaso(pasos.length - 1);
+      return;
+    }
+    var datos = recoge();
+    if(!referencia) referencia = nuevaReferencia();
+    var cuerpo = texto(datos);
+    ultimo = {datos: datos, cuerpo: cuerpo, carga: construyeCarga(datos, cuerpo)};
+    guarda();
+    lanzaEnvio(btnSig);
+  }
+
+  function lanzaEnvio(boton){
+    if(enviando || !ultimo) return;
+    enviando = true;
+    var textoBoton = boton.innerHTML;
+    [btnSig, btnAtras, btnRetry].forEach(function(b){ b.disabled = true; });
+    boton.innerHTML = ICONO_GIRO + ' Enviando…';
+    function reactivaBotones(){
+      enviando = false;
+      boton.innerHTML = textoBoton;
+      [btnSig, btnAtras, btnRetry].forEach(function(b){ b.disabled = false; });
+    }
+
+    envia(ultimo.carga).then(function(){
+      reactivaBotones();
+      pantallaFinal(true);
+    }, function(err){
+      if(window.console) console.warn('[envío] ' + err.tipo + (err.detalle ? ' · ' + err.detalle : ''));
+      reactivaBotones();
+      pantallaFinal(false, err);
+    });
+  }
+
+  btnRetry.addEventListener('click', function(){ lanzaEnvio(btnRetry); });
+
+  /* ── Pantalla final ────────────────────────────────────── */
+  function mensajeBreve(estado){
+    var inicio = 'Hola Cristina, ';
+    if(estado === 'aceptado')
+      return inicio + 'he enviado una solicitud de estudio hipotecario desde el formulario. Mi referencia es ' + referencia + '.';
+    if(estado === 'incierto')
+      return inicio + 'he intentado enviar una solicitud de estudio hipotecario desde el formulario y no se ha podido confirmar. ' +
+        'Mi referencia es ' + referencia + '. ¿Te ha llegado?';
+    return inicio + 'he intentado enviar una solicitud de estudio hipotecario desde el formulario y no se ha podido enviar. ' +
+      'Mi referencia es ' + referencia + '.';
+  }
+
+  function pantallaFinal(aceptado, err){
+    var datos  = ultimo.datos, cuerpo = ultimo.cuerpo;
+    var nombre = (datos.nombre || '').split(' ')[0];
+    var tick   = $('tick'), aviso = $('aviso');
+
+    var tipo     = aceptado ? 'aceptado' : ((err && MOTIVOS[err.tipo]) ? err.tipo : 'red');
+    var incierto = !aceptado && tipo !== 'rechazo';
+
+    // WhatsApp y email solo llevan un mensaje breve con la referencia: ningún
+    // dato del formulario viaja en la dirección del enlace. El resumen completo
+    // solo sale de aquí si la persona lo copia y lo pega ella misma.
+    var breve = mensajeBreve(aceptado ? 'aceptado' : (incierto ? 'incierto' : 'rechazo'));
+    var waUrl = '#vista-previa-whatsapp';   // VISTA PREVIA: enlace desactivado
+    $('enlaceWa').href = waUrl;
+    btnWa.href = waUrl;
+    $('enlaceEmail').href = '#vista-previa-email' +   // VISTA PREVIA: enlace desactivado
+     
+      '?subject=' + encodeURIComponent('Solicitud de estudio hipotecario · ' + referencia) +
+      '&body=' + encodeURIComponent(breve);
+    $('resumen').textContent = cuerpo;
+    $('enlaceCopiar').textContent = 'copiar el resumen';
+
+    if(aceptado){
+      // Enviada: se vacía el almacenamiento y el formulario. El resumen sigue
+      // visible para consultarlo o copiarlo hasta borrar o caducar.
+      borraGuardado();
+      form.reset();
+      aplicaPrecioDesconocido();
+      aceptadoEn = null;
+      ultimaActividad = Date.now();
+      tick.className = 'tick';
+      tick.innerHTML = ICONO_OK;
+      $('tituloFinal').textContent = nombre ? 'Solicitud enviada, ' + nombre : 'Solicitud enviada';
+      // El servicio ha aceptado la solicitud; eso no garantiza que el correo
+      // haya llegado ya al buzón, así que no lo afirmamos.
+      $('textoFinal').textContent = 'El servicio de envío ha aceptado tu solicitud y me la reenvía por correo. ' +
+        'En cuanto me llegue la reviso personalmente y te contesto en 24 h laborables al teléfono que me has dejado.';
+      aviso.className = 'aviso espera visible';
+      aviso.innerHTML = 'Tu referencia es <strong>' + referencia + '</strong>. Si en 24 h laborables no tienes noticias mías, ' +
+        'escríbeme por WhatsApp indicándola: puede que el correo no me haya llegado.';
+      btnRetry.classList.add('oculto');
+      $('altWa').classList.remove('oculto');
+      $('altEmail').classList.add('oculto');
+      $('altBorrar').classList.add('oculto');
+      $('detalle').removeAttribute('open');
+      $('nav').classList.add('oculto');
+    } else {
+      tick.className = 'tick error';
+      tick.innerHTML = ICONO_AVISO;
+      if(incierto){
+        $('tituloFinal').textContent = 'No he podido confirmar el envío';
+        $('textoFinal').textContent = MOTIVOS[tipo] + ' Es posible que tu solicitud sí me haya llegado. ' +
+          'Antes de reintentar, puedes escribirme por WhatsApp para comprobarlo: el mensaje solo lleva tu referencia.';
+        aviso.innerHTML = 'Si reintentas, se enviará con la misma referencia, <strong>' + referencia + '</strong>: ' +
+          'si me llega dos veces, sabré que es la misma solicitud. Tus respuestas se conservan solo en esta pestaña ' +
+          'y se borran al cerrarla o tras 2 horas sin actividad. También puedes llamarme al <strong>603 568 880</strong>.';
+        btnRetry.textContent = 'Reintentar con la misma referencia';
+      } else {
+        $('tituloFinal').textContent = 'No se ha podido enviar';
+        $('textoFinal').textContent = MOTIVOS[tipo] +
+          ' No has perdido nada: puedes reintentarlo o escribirme por WhatsApp o email. El mensaje solo lleva tu ' +
+          'referencia; si quieres, copia tus respuestas con «copiar el resumen» y pégalas tú en el mensaje.';
+        aviso.innerHTML = 'Tus respuestas se conservan solo en esta pestaña y se borran al cerrarla o tras 2 horas sin actividad. ' +
+          'También puedes llamarme al <strong>603 568 880</strong>.';
+        btnRetry.textContent = 'Reintentar el envío';
+      }
+      aviso.className = 'aviso error visible';
+      btnRetry.classList.remove('oculto');
+      $('altWa').classList.add('oculto');
+      $('altEmail').classList.remove('oculto');
+      $('altBorrar').classList.remove('oculto');
+      $('detalle').setAttribute('open','');
+      btnWa.classList.remove('oculto');
+      $('nav').classList.remove('oculto');
+    }
+
+    form.classList.add('oculto');
+    portada.classList.add('oculto');
+    progreso.classList.add('oculto');
+    final_.classList.add('activo');
+    btnSig.classList.add('oculto');
+    btnAtras.classList.add('oculto');
+    window.scrollTo({top:0, behavior:'smooth'});
+    $('tituloFinal').focus({preventScroll:true});
+  }
+
+  /* ── Copiar resumen (con alternativa si el navegador lo bloquea) ── */
+  function copiaLegado(t){
+    var area = document.createElement('textarea');
+    area.value = t; area.setAttribute('readonly','');
+    area.style.position = 'fixed'; area.style.opacity = '0';
+    document.body.appendChild(area); area.select();
+    var ok = false; try{ ok = document.execCommand('copy'); }catch(err){}
+    document.body.removeChild(area);
+    return ok;
+  }
+  $('enlaceCopiar').addEventListener('click', function(){
+    var boton = this, t = ultimo ? ultimo.cuerpo : '';
+    function hecho(){ boton.textContent = 'resumen copiado ✓'; }
+    function manual(){
+      if(copiaLegado(t)) return hecho();
+      $('detalle').setAttribute('open','');
+      var sel = window.getSelection(), rango = document.createRange();
+      rango.selectNodeContents($('resumen')); sel.removeAllRanges(); sel.addRange(rango);
+      boton.textContent = 'selecciona el resumen y cópialo';
+    }
+    if(navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(t).then(hecho, manual);
+    else manual();
+  });
+
+  /* ── Borrado completo: almacenamiento, campos, consentimiento y resumen ── */
+  function borraTodo(motivo){
+    if(enviando) return;
+    borraGuardado();
+    form.reset();
+    aplicaPrecioDesconocido();
+    form.querySelectorAll('.q').forEach(function(q){ marca(q, ''); });
+    aceptadoEn = null; referencia = null; ultimo = null; ultimaActividad = 0;
+
+    $('resumen').textContent = '';
+    $('enlaceWa').href = '#'; $('enlaceEmail').href = '#'; btnWa.href = '#';
+    $('enlaceCopiar').textContent = 'copiar el resumen';
+    final_.classList.remove('activo');
+    [form, portada, progreso, $('nav'), btnSig].forEach(function(el){ el.classList.remove('oculto'); });
+    [btnWa, btnRetry].forEach(function(el){ el.classList.add('oculto'); });
+    [btnSig, btnAtras, btnRetry].forEach(function(b){ b.disabled = false; });
+    vaA(0);   // también repone el texto «Continuar» del botón principal
+
+    var aviso = $('avisoBorrado');
+    aviso.textContent = (motivo === 'caducado')
+      ? 'Por seguridad, tus respuestas se han borrado de este dispositivo tras 2 horas sin actividad.'
+      : 'Tus respuestas y tu aceptación de la privacidad se han borrado de este dispositivo.';
+    aviso.classList.add('visible');
+  }
+  $('enlaceBorrar').addEventListener('click', function(){ borraTodo('usuario'); });
+  $('borrarPie').addEventListener('click', function(){ borraTodo('usuario'); });
+
+  // Cualquier actividad en el formulario cuenta para la caducidad
+  ['input','change'].forEach(function(ev){
+    form.addEventListener(ev, function(){
+      ultimaActividad = Date.now();
+      $('avisoBorrado').classList.remove('visible');
+    }, true);
+  });
+
+  // La caducidad también se aplica con la página abierta: se comprueba cada
+  // minuto y al volver a la pestaña (los móviles congelan los temporizadores).
+  function compruebaCaducidad(){
+    if(enviando) return;
+    var g = leeGuardado();
+    var desde = Math.max(ultimaActividad, (g && g.t) || 0);
+    if(desde && Date.now() - desde >= CADUCIDAD_MS) borraTodo('caducado');
+  }
+  setInterval(compruebaCaducidad, 60000);
+  document.addEventListener('visibilitychange', function(){ if(!document.hidden) compruebaCaducidad(); });
+  window.addEventListener('pageshow', compruebaCaducidad);
+
+  /* ── Autoguardado temporal (por si recargan la página sin querer) ── */
+  function almacen(){ try{ return window.sessionStorage; }catch(err){ return null; } }
+
+  function guarda(){
+    var s = almacen(); if(!s) return;
+    var datos = recoge();
+    NO_GUARDAR.forEach(function(k){ delete datos[k]; });
+    try{ s.setItem(CLAVE, JSON.stringify({t: Date.now(), ref: referencia, datos: datos})); }catch(err){}
+  }
+
+  function leeGuardado(){
+    var s = almacen(); if(!s) return null;
+    try{ return JSON.parse(s.getItem(CLAVE) || 'null'); }catch(err){ return null; }
+  }
+
+  function borraGuardado(){
+    var s = almacen();
+    if(s){ try{ s.removeItem(CLAVE); }catch(err){} }
+    try{ window.localStorage.removeItem(CLAVE_ANTIGUA); }catch(err){}
+  }
+
+  (function restaura(){
+    // Quien usó la versión anterior tenía sus datos en localStorage sin caducidad
+    try{ window.localStorage.removeItem(CLAVE_ANTIGUA); }catch(err){}
+    var guardado = leeGuardado();
+    if(!guardado || !guardado.datos || !(Date.now() - guardado.t < CADUCIDAD_MS)){
+      borraGuardado();
+      return;
+    }
+    if(guardado.ref) referencia = guardado.ref;
+    ultimaActividad = guardado.t;
+    var datos = guardado.datos;
+    Object.keys(datos).forEach(function(nombre){
+      if(!ETIQUETAS[nombre]) return;
+      var campos = form.querySelectorAll('[name="'+nombre+'"]');
+      if(!campos.length) return;
+      if(campos[0].type === 'radio' || campos[0].type === 'checkbox'){
+        var marcados = String(datos[nombre]).split(', ');
+        campos.forEach(function(c){ if(marcados.indexOf(c.value) !== -1) c.checked = true; });
+      } else if(nombre === 'precio' && datos[nombre] === PRECIO_DESCONOCIDO){
+        nsPrecio.checked = true;
+        aplicaPrecioDesconocido();
+      } else {
+        campos[0].value = datos[nombre];
+      }
+    });
+  })();
+
+  refrescaProgreso();
+})();
+</script>
+</body>
+</html>
