@@ -33,7 +33,9 @@
   --seleccion:#efe6d6;      /* opción marcada */
   --borgona:#8d2d44; --borgona-prof:#6d2035;
   --negro:#1c1a19;
-  --linea:#e2d6c1; --borde-marca:#a89a86;
+  --linea:#e2d6c1;
+  /* Bordes de controles con contraste mínimo 3:1 (WCAG 1.4.11) y texto de ejemplo 4.5:1 */
+  --borde-marca:#8f8170; --borde-campo:#9a8b77; --ejemplo:#7d6f60;
   --texto:#1c1a19; --texto-suave:#5e5852;
   --error:#a3231f;
   --display:'Fraunces',Georgia,serif;
@@ -195,11 +197,11 @@ h1{
 
 input[type=text],input[type=tel],input[type=email],input[type=number],textarea{
   width:100%; font-family:var(--cuerpo); font-size:16px; color:var(--texto);
-  background:var(--campo); border:1px solid var(--linea);
+  background:var(--campo); border:1px solid var(--borde-campo);
   border-radius:10px; padding:12px 14px; margin-top:10px;
   transition:border-color .18s var(--ease-estandar), background-color .18s var(--ease-estandar);
 }
-input::placeholder,textarea::placeholder{color:#b7a79b}
+input::placeholder,textarea::placeholder{color:var(--ejemplo)}
 input:focus,textarea:focus{outline:none; border-color:var(--borgona); background:var(--papel)}
 input:disabled{opacity:.5; cursor:not-allowed}
 textarea{resize:vertical; min-height:96px; line-height:1.6}
@@ -984,6 +986,17 @@ textarea{resize:vertical; min-height:96px; line-height:1.6}
     msg.setAttribute('data-base', msg.textContent);
     msg.setAttribute('aria-live', 'polite');
     q.querySelectorAll('input,textarea').forEach(function(c){ c.setAttribute('aria-describedby', msg.id); });
+  });
+
+  // Cada grupo de opciones se anuncia con su pregunta (lectores de pantalla)
+  form.querySelectorAll('.q').forEach(function(q, i){
+    var opciones = q.querySelector('.opciones'), titulo = q.querySelector('span.titulo');
+    if(!opciones || !titulo) return;
+    titulo.id = 'pregunta-' + (i + 1);
+    var radios = !!opciones.querySelector('input[type=radio]');
+    opciones.setAttribute('role', radios ? 'radiogroup' : 'group');
+    opciones.setAttribute('aria-labelledby', titulo.id);
+    if(radios && q.hasAttribute('data-req')) opciones.setAttribute('aria-required', 'true');
   });
 
   // Al corregir, el error se actualiza o desaparece solo
